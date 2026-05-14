@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#ff85a1;--rose:#e8527a;--blush:#ffd6e0;--deep:#8b1a4a;--dark:#1a0612;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{min-height:100vh;background:var(--dark);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;overflow:hidden;}
+  .bg{position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(232,82,122,.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(139,26,74,.2) 0%,transparent 60%),linear-gradient(135deg,#1a0612,#2d0820,#1a0612);}
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:0;}
+  .petal{position:absolute;opacity:0;animation:falling linear infinite;}
+  @keyframes falling{0%{transform:translateY(-60px) rotate(0deg);opacity:0}5%{opacity:.5}95%{opacity:.3}100%{transform:translateY(110vh) rotate(720deg) translateX(60px);opacity:0}}
+  .card{position:relative;z-index:10;background:rgba(255,245,247,.05);backdrop-filter:blur(30px);border:1px solid rgba(255,133,161,.25);border-radius:32px;padding:60px 70px;max-width:440px;width:92%;text-align:center;box-shadow:0 0 80px rgba(232,82,122,.12),inset 0 1px 0 rgba(255,255,255,.1);animation:cardIn .8s cubic-bezier(.175,.885,.32,1.275) both;}
+  @keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .logo{font-size:3rem;margin-bottom:8px;animation:heartbeat 1.5s ease-in-out infinite;}
+  @keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.15)}28%{transform:scale(1)}42%{transform:scale(1.1)}56%{transform:scale(1)}}
+  h1{font-family:'Playfair Display',serif;font-style:italic;color:var(--blush);font-size:2.2rem;line-height:1.2;margin-bottom:6px;}
+  .tagline{color:rgba(255,214,224,.5);font-size:.95rem;margin-bottom:48px;letter-spacing:.5px;}
+  .input-group{position:relative;margin-bottom:24px;}
+  .input-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;}
+  input[type=password]{width:100%;background:rgba(139,26,74,.15);border:1.5px solid rgba(255,133,161,.25);border-radius:14px;padding:16px 20px 16px 52px;color:var(--blush);font-family:'Cormorant Garamond',serif;font-size:1.4rem;letter-spacing:4px;text-align:center;outline:none;transition:all .3s;}
+  input::placeholder{color:rgba(255,133,161,.3);letter-spacing:2px;font-size:1rem;}
+  input:focus{border-color:var(--pink);background:rgba(139,26,74,.25);box-shadow:0 0 0 4px rgba(255,133,161,.1);}
+  .btn-login{width:100%;background:linear-gradient(135deg,var(--rose),var(--pink));color:white;border:none;padding:18px;border-radius:14px;font-family:'Playfair Display',serif;font-size:1.2rem;cursor:pointer;transition:all .3s;letter-spacing:2px;}
+  .btn-login:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(232,82,122,.45);}
+  .error-msg{color:#ff6b8a;font-size:.9rem;margin-top:14px;opacity:0;transition:opacity .3s;min-height:20px;}
+  .error-msg.show{opacity:1;}
+  .shake{animation:shake .4s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,133,161,.2),transparent);margin:28px 0;}
+  .note{color:rgba(255,214,224,.35);font-size:.82rem;font-style:italic;}
+  .success-overlay{position:fixed;inset:0;z-index:100;background:rgba(26,6,18,.95);display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .5s;}
+  .success-overlay.show{opacity:1;pointer-events:all;}
+  .success-icon{font-size:5rem;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275);}
+  .success-text{font-family:'Playfair Display',serif;font-style:italic;color:var(--blush);font-size:2rem;margin-top:20px;}
+  @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="petals" id="petals"></div>
+<div class="card">
+  <div class="logo">💕</div>
+  <h1>ยินดีต้อนรับ</h1>
+  <p class="tagline">กรุณาใส่รหัสจาก host เพื่อเข้าชม</p>
+  <div class="input-group" id="inputGroup">
+    <span class="input-icon">🔑</span>
+    <input type="password" id="codeInput" maxlength="6" placeholder="รหัสลับ" autocomplete="off" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')tryLogin()">
+  </div>
+  <button class="btn-login" onclick="tryLogin()">✨ เข้าสู่ความทรงจำ ✨</button>
+  <div class="error-msg" id="errMsg">รหัสไม่ถูกต้อง ลองใหม่อีกครั้งนะคะ 💔</div>
+  <div class="divider"></div>
+  <p class="note">ขอรหัสจาก host ก่อนนะคะ 🌸</p>
+</div>
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">💝</div>
+  <div class="success-text">ยินดีต้อนรับ~</div>
+</div>
+<script>
+const CORRECT_CODE = "อีหนู";
+const petals=document.getElementById('petals');
+const emos=['🌸','🌺','💗','🌷','💕','✨','💓'];
+for(let i=0;i<20;i++){const p=document.createElement('div');p.className='petal';p.textContent=emos[Math.floor(Math.random()*emos.length)];p.style.left=Math.random()*100+'%';p.style.animationDuration=(6+Math.random()*10)+'s';p.style.animationDelay=(-Math.random()*15)+'s';p.style.fontSize=(.8+Math.random()*1.2)+'rem';petals.appendChild(p);}
+function tryLogin(){
+  const input=document.getElementById('codeInput').value.trim().toUpperCase();
+  if(!input)return;
+  if(input===CORRECT_CODE){
+    const o=document.getElementById('successOverlay');o.classList.add('show');
+    setTimeout(()=>{window.location.href='gallery.html';},1800);
+  } else {
+    const g=document.getElementById('inputGroup'),e=document.getElementById('errMsg');
+    g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake');
+    e.classList.add('show');document.getElementById('codeInput').value='';
+    setTimeout(()=>e.classList.remove('show'),3000);
+  }
+}
+</script>
+</body>
+</html>
