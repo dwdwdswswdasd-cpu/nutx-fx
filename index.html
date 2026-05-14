@@ -10,19 +10,15 @@
     --bg-deep: #080c14;
     --bg-panel: #0d1526;
     --bg-card: #111e35;
-    --bg-row: #0f1a2e;
-    --bg-row-alt: #0a1220;
     --accent-cyan: #00f5ff;
     --accent-gold: #ffd700;
     --accent-green: #00ff88;
     --accent-red: #ff3366;
-    --accent-purple: #b66aff;
     --border-dim: #1e3050;
     --text-primary: #e8f4ff;
     --text-secondary: #7090b0;
     --text-muted: #3a5070;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg-deep);
@@ -30,449 +26,146 @@
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
   }
-
-  #animated-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
+  #animated-bg { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
+    content:''; position:fixed; inset:0;
+    background-image: linear-gradient(rgba(0,245,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,245,255,0.03) 1px,transparent 1px);
+    background-size: 40px 40px; pointer-events:none; z-index:0;
   }
+  .wrapper { position:relative; z-index:1; max-width:1400px; margin:0 auto; padding:0 20px 80px; }
 
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-  }
+  /* HEADER */
+  .header { display:flex; align-items:center; justify-content:space-between; padding:34px 0 24px; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:32px; flex-wrap:wrap; gap:18px; }
+  .logo-title { font-family:'Orbitron',sans-serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:900; letter-spacing:0.2em; background:linear-gradient(90deg,var(--accent-cyan),var(--accent-gold),var(--accent-cyan)); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:shimmer 4s linear infinite; }
+  @keyframes shimmer { to { background-position:200% center; } }
+  .header-note { font-family:'Share Tech Mono',monospace; font-size:0.78rem; color:var(--text-secondary); letter-spacing:0.18em; text-transform:uppercase; margin-top:2px; }
+  .header-stats { display:flex; gap:9px; flex-wrap:wrap; justify-content:flex-end; }
+  .stat-pill { background:linear-gradient(180deg,rgba(12,21,39,0.95),rgba(7,12,22,0.95)); border:1px solid rgba(0,245,255,0.12); border-radius:3px; padding:12px 22px; display:flex; flex-direction:column; align-items:center; min-width:120px; }
+  .stat-label { font-family:'Share Tech Mono',monospace; font-size:0.63rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.12em; }
+  .stat-value { font-family:'Orbitron',sans-serif; font-size:1.25rem; font-weight:900; margin-top:5px; letter-spacing:0.04em; }
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 34px 0 24px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    gap: 18px;
-  }
+  /* FORM */
+  .form-section { background:rgba(8,14,28,0.94); border:1px solid rgba(0,245,255,0.10); border-radius:22px; padding:26px 28px; margin-bottom:32px; backdrop-filter:blur(10px); }
+  .section-title h2 { font-family:'Orbitron',sans-serif; font-size:1.05rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent-cyan); margin-bottom:20px; }
+  .form-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:14px; align-items:end; }
+  .form-field { display:flex; flex-direction:column; gap:8px; }
+  .form-field label { font-family:'Share Tech Mono',monospace; font-size:0.68rem; color:var(--text-secondary); letter-spacing:0.08em; }
+  .form-field input, .form-field select { background:rgba(8,15,28,0.88); border:1px solid rgba(255,255,255,0.08); border-radius:2px; color:var(--text-primary); padding:14px 16px; font-weight:700; outline:none; font-family:'Orbitron',sans-serif; font-size:0.95rem; transition:border-color 0.2s; width:100%; }
+  .form-field input:focus, .form-field select:focus { border-color:rgba(0,245,255,0.55); }
+  .form-grid>.form-field:nth-child(1){grid-column:span 2}
+  .form-grid>.form-field:nth-child(2){grid-column:span 2}
+  .form-grid>.form-field:nth-child(3){grid-column:span 1}
+  .form-grid>.form-field:nth-child(4){grid-column:span 1}
+  .form-grid>.form-field:nth-child(5){grid-column:span 2}
+  .form-grid>button{grid-column:span 2;justify-self:end}
+  .btn-add { background:linear-gradient(135deg,rgba(0,245,255,0.95),rgba(255,215,0,0.95)); border:none; border-radius:16px; color:#08101d; font-family:'Orbitron',sans-serif; font-size:0.82rem; font-weight:800; padding:16px 28px; cursor:pointer; transition:transform 0.2s; }
+  .btn-add:hover { transform:translateY(-1px); }
 
-  .logo-block {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  /* WEEKS */
+  .week-block { margin-bottom:28px; border-radius:20px; overflow:hidden; border:1px solid rgba(0,245,255,0.12); background:rgba(11,21,40,0.95); }
+  .week-header { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; background:rgba(0,245,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); }
+  .week-badge { font-family:'Orbitron',sans-serif; font-size:0.78rem; font-weight:700; padding:6px 18px; border-radius:16px; border:1px solid rgba(0,245,255,0.35); color:var(--accent-cyan); background:rgba(0,245,255,0.06); }
+  table { width:100%; border-collapse:collapse; }
+  thead th { font-family:'Share Tech Mono',monospace; font-size:0.68rem; color:var(--text-secondary); padding:14px 16px; text-align:left; letter-spacing:0.1em; }
+  tbody tr:hover { background:rgba(0,245,255,0.06); }
+  tbody tr:nth-child(even) { background:rgba(255,255,255,0.03); }
+  tbody td { padding:14px 16px; font-family:'Orbitron',sans-serif; font-size:0.92rem; font-weight:700; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .delete-button { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:var(--text-secondary); width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s; }
+  .delete-button:hover { background:rgba(255,51,102,0.12); color:var(--accent-red); }
 
-  .logo-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold), var(--accent-cyan));
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 4s linear infinite;
-  }
-  @keyframes shimmer { to { background-position: 200% center; } }
+  /* TOTAL */
+  .total-banner { background:linear-gradient(180deg,rgba(8,14,20,0.98),rgba(10,18,32,0.94)); border:1px solid rgba(32,153,201,0.16); border-radius:20px; padding:22px 28px; display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; }
+  .total-value { font-family:'Orbitron',sans-serif; font-size:clamp(1.8rem,5vw,2.4rem); font-weight:900; }
+  .reset-btn { background:transparent; border:1px solid rgba(255,51,102,0.85); color:var(--accent-red); padding:10px 16px; cursor:pointer; font-family:'Share Tech Mono',monospace; border-radius:14px; }
 
-  .header-note {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  .header-stats { display: flex; gap: 9px; flex-wrap: wrap; justify-content: flex-end; }
-  .stat-pill {
-    background: linear-gradient(180deg, rgba(12,21,39,0.95), rgba(7,12,22,0.95));
-    border: 1px solid rgba(0,245,255,0.12);
-    border-radius: 3px;
-    padding: 12px 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 120px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.14);
-  }
-  .stat-label { font-family: 'Share Tech Mono', monospace; font-size: 0.63rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.12em; }
-  .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 900; margin-top: 5px; letter-spacing: 0.04em; }
-
-  .form-section {
-    background: rgba(8, 14, 28, 0.94);
-    border: 1px solid rgba(0,245,255,0.10);
-    border-radius: 22px;
-    padding: 26px 28px;
-    margin-bottom: 32px;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.25);
-    backdrop-filter: blur(10px);
-  }
-
-  .section-title {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    gap: 2px;
-    flex-wrap: wrap;
-  }
-  .section-title h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.05rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent-cyan);
-  }
-  .section-title span {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    letter-spacing: 0.12em;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 14px;
-    align-items: end;
-  }
-
-  .form-field { display: flex; flex-direction: column; gap: 8px; }
-  .form-field label { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--text-secondary); letter-spacing: 0.08em; }
-  .form-field input,
-  .form-field select {
-    background: rgba(8, 15, 28, 0.88);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 2px;
-    color: var(--text-primary);
-    padding: 14px 16px;
-    font-weight: 700;
-    outline: none;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.95rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .form-field input:focus,
-  .form-field select:focus {
-    border-color: rgba(0,245,255,0.55);
-    box-shadow: 0 0 0 4px rgba(0,245,255,0.12);
-  }
-  .form-field input[readonly] { cursor: default; }
-
-  .form-grid > .form-field:nth-child(1) { grid-column: span 2; }
-  .form-grid > .form-field:nth-child(2) { grid-column: span 2; }
-  .form-grid > .form-field:nth-child(3) { grid-column: span 1; }
-  .form-grid > .form-field:nth-child(4) { grid-column: span 1; }
-  .form-grid > .form-field:nth-child(5) { grid-column: span 2; }
-  .form-grid > button { grid-column: span 2; justify-self: end; }
-
-  .btn-add {
-    background: linear-gradient(135deg, rgba(0,245,255,0.95), rgba(255,215,0,0.95));
-    border: none;
-    border-radius: 16px;
-    color: #08101d;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 800;
-    padding: 16px 28px;
-    cursor: pointer;
-    box-shadow: 0 18px 35px rgba(0,245,255,0.18);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .btn-add:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 20px 45px rgba(0,245,255,0.28);
-  }
-
-  .week-block { margin-bottom: 28px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,245,255,0.12); background: rgba(11, 21, 40, 0.95); box-shadow: 0 24px 60px rgba(0,0,0,0.22); }
-  .week-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background: rgba(0,245,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .week-badge { font-family: 'Orbitron', sans-serif; font-size: 0.78rem; font-weight: 700; padding: 6px 18px; border-radius: 16px; border: 1px solid rgba(0,245,255,0.35); color: var(--accent-cyan); background: rgba(0,245,255,0.06); }
-  
-  table { width: 100%; border-collapse: collapse; }
-  thead th { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--text-secondary); padding: 14px 16px; text-align: left; letter-spacing: 0.1em; }
-  tbody tr { transition: background 0.2s ease; }
-  tbody tr:hover { background: rgba(0,245,255,0.06); }
-  tbody tr:nth-child(even) { background: rgba(255,255,255,0.03); }
-  tbody td { padding: 14px 16px; font-family: 'Orbitron', sans-serif; font-size: 0.92rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  tbody td:last-child { text-align: right; }
-  .delete-button { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--text-secondary); width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
-  .delete-button:hover { transform: scale(1.05); background: rgba(255,51,102,0.12); color: var(--accent-red); }
-  
-  .total-banner {
-    background: linear-gradient(180deg, rgba(8,14,20,0.98), rgba(10,18,32,0.94));
-    border: 1px solid rgba(32, 153, 201, 0.16);
-    border-radius: 20px;
-    padding: 22px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    bottom: 20px;
-    backdrop-filter: blur(14px);
-    box-shadow: 0 28px 60px rgba(0,0,0,0.22);
-  }
-  .total-value { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 900; letter-spacing: 0.04em; }
-  .reset-btn {
-    background: transparent;
-    border: 1px solid rgba(255,51,102,0.85);
-    color: var(--accent-red);
-    padding: 10px 16px;
-    cursor: pointer;
-    font-family: 'Share Tech Mono', monospace;
-    border-radius: 14px;
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
-  .reset-btn:hover { background: rgba(255,51,102,0.08); transform: translateY(-1px); }
-
-  @media (max-width: 900px) {
-    .form-grid { grid-template-columns: 1fr 1fr; }
-    .form-grid > .form-field:nth-child(1),
-    .form-grid > .form-field:nth-child(2),
-    .form-grid > .form-field:nth-child(5),
-    .form-grid > button { grid-column: span 2; }
-    .btn-add { justify-self: stretch; }
-  }
-  @media (max-width: 640px) {
-    .header { flex-direction: column; align-items: flex-start; }
-    .header-stats { width: 100%; justify-content: flex-start; }
-    .week-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .total-banner { flex-direction: column; align-items: flex-start; gap: 14px; }
-  }
+  /* KEY MODAL */
+  .key-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
+  .key-modal { background:linear-gradient(180deg,#0d1526,#080c14); border:1px solid rgba(0,245,255,0.2); border-radius:24px; padding:40px; max-width:480px; width:90%; box-shadow:0 40px 80px rgba(0,0,0,0.5); }
+  .key-modal h2 { font-family:'Orbitron',sans-serif; font-size:1.1rem; color:var(--accent-gold); letter-spacing:0.2em; margin-bottom:8px; }
+  .key-modal p { font-size:0.85rem; color:var(--text-secondary); margin-bottom:24px; line-height:1.6; }
+  .key-modal input { width:100%; background:rgba(8,15,28,0.9); border:1px solid rgba(0,245,255,0.2); border-radius:10px; color:var(--text-primary); padding:14px 18px; font-family:'Share Tech Mono',monospace; font-size:0.85rem; outline:none; margin-bottom:16px; }
+  .key-modal input:focus { border-color:rgba(0,245,255,0.5); }
+  .key-modal-btn { width:100%; background:linear-gradient(135deg,rgba(0,245,255,0.95),rgba(255,215,0,0.9)); border:none; border-radius:14px; color:#08101d; font-family:'Orbitron',sans-serif; font-size:0.85rem; font-weight:800; padding:16px; cursor:pointer; }
+  .key-modal-note { font-size:0.72rem; color:var(--text-muted); margin-top:12px; text-align:center; line-height:1.5; }
+  .key-link { color:var(--accent-cyan); text-decoration:none; }
 
   /* AI CHAT */
-  .ai-chat-section {
-    margin-top: 36px;
-    border-radius: 22px;
-    border: 1px solid rgba(255,215,0,0.18);
-    background: rgba(8,14,28,0.97);
-    box-shadow: 0 0 60px rgba(255,215,0,0.05), 0 24px 60px rgba(0,0,0,0.3);
-    overflow: hidden;
-    backdrop-filter: blur(12px);
-  }
-  .ai-chat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 24px;
-    background: linear-gradient(90deg, rgba(255,215,0,0.07), rgba(0,245,255,0.04));
-    border-bottom: 1px solid rgba(255,215,0,0.1);
-  }
-  .ai-avatar {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,245,255,0.15));
-    border: 1px solid rgba(255,215,0,0.3);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-  }
-  .ai-status-dot {
-    width: 10px; height: 10px;
-    background: var(--accent-green);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent-green);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+  .ai-chat-section { border-radius:22px; border:1px solid rgba(255,215,0,0.18); background:rgba(8,14,28,0.97); overflow:hidden; }
+  .ai-chat-header { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; background:linear-gradient(90deg,rgba(255,215,0,0.07),rgba(0,245,255,0.04)); border-bottom:1px solid rgba(255,215,0,0.1); }
+  .ai-avatar { width:40px; height:40px; background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(0,245,255,0.15)); border:1px solid rgba(255,215,0,0.3); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+  .ai-status-dot { width:10px; height:10px; background:var(--accent-green); border-radius:50%; box-shadow:0 0 8px var(--accent-green); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+  .ai-key-bar { display:flex; align-items:center; gap:10px; padding:10px 20px; background:rgba(255,215,0,0.03); border-bottom:1px solid rgba(255,215,0,0.08); font-family:'Share Tech Mono',monospace; font-size:0.68rem; color:var(--text-secondary); }
+  .ai-key-bar button { background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.2); color:var(--accent-gold); border-radius:8px; padding:4px 12px; cursor:pointer; font-family:'Share Tech Mono',monospace; font-size:0.65rem; }
+  .ai-quick-btns { display:flex; gap:8px; flex-wrap:wrap; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .ai-quick-btn { background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.2); color:var(--accent-gold); border-radius:20px; padding:7px 14px; font-family:'Share Tech Mono',monospace; font-size:0.72rem; cursor:pointer; transition:background 0.2s; }
+  .ai-quick-btn:hover { background:rgba(255,215,0,0.15); }
+  .ai-messages { height:340px; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:14px; scroll-behavior:smooth; }
+  .ai-messages::-webkit-scrollbar { width:4px; }
+  .ai-messages::-webkit-scrollbar-thumb { background:rgba(255,215,0,0.2); border-radius:4px; }
+  .ai-msg { display:flex; }
+  .ai-msg-user { justify-content:flex-end; }
+  .ai-msg-bubble { max-width:82%; padding:12px 18px; border-radius:16px; font-family:'Rajdhani',sans-serif; font-size:0.95rem; line-height:1.6; font-weight:500; white-space:pre-wrap; }
+  .ai-msg-bot .ai-msg-bubble { background:rgba(0,245,255,0.06); border:1px solid rgba(0,245,255,0.12); color:var(--text-primary); border-bottom-left-radius:4px; }
+  .ai-msg-user .ai-msg-bubble { background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(0,245,255,0.1)); border:1px solid rgba(255,215,0,0.2); color:var(--text-primary); border-bottom-right-radius:4px; }
+  .ai-typing { display:flex; gap:5px; align-items:center; padding:4px 0; }
+  .ai-typing span { width:7px; height:7px; background:var(--accent-gold); border-radius:50%; animation:typing-bounce 1.2s ease-in-out infinite; }
+  .ai-typing span:nth-child(2){animation-delay:0.2s} .ai-typing span:nth-child(3){animation-delay:0.4s}
+  @keyframes typing-bounce { 0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-6px);opacity:1} }
+  .ai-input-row { display:flex; gap:10px; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.06); background:rgba(5,10,20,0.6); }
+  .ai-input { flex:1; background:rgba(8,15,28,0.9); border:1px solid rgba(255,215,0,0.2); border-radius:12px; color:var(--text-primary); padding:13px 18px; font-family:'Rajdhani',sans-serif; font-size:0.95rem; font-weight:500; outline:none; }
+  .ai-input:focus { border-color:rgba(255,215,0,0.5); }
+  .ai-input::placeholder { color:var(--text-muted); }
+  .ai-send-btn { background:linear-gradient(135deg,rgba(255,215,0,0.9),rgba(0,245,255,0.8)); border:none; border-radius:12px; color:#08101d; width:48px; height:48px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
 
-  .ai-quick-btns {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    padding: 14px 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .ai-quick-btn {
-    background: rgba(255,215,0,0.07);
-    border: 1px solid rgba(255,215,0,0.2);
-    color: var(--accent-gold);
-    border-radius: 20px;
-    padding: 7px 14px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-    letter-spacing: 0.04em;
-  }
-  .ai-quick-btn:hover { background: rgba(255,215,0,0.15); transform: translateY(-1px); }
-
-  .ai-messages {
-    height: 320px;
-    overflow-y: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    scroll-behavior: smooth;
-  }
-  .ai-messages::-webkit-scrollbar { width: 4px; }
-  .ai-messages::-webkit-scrollbar-track { background: transparent; }
-  .ai-messages::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.2); border-radius: 4px; }
-
-  .ai-msg { display: flex; }
-  .ai-msg-user { justify-content: flex-end; }
-  .ai-msg-bot { justify-content: flex-start; }
-  .ai-msg-bubble {
-    max-width: 80%;
-    padding: 12px 18px;
-    border-radius: 16px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    font-weight: 500;
-  }
-  .ai-msg-bot .ai-msg-bubble {
-    background: rgba(0,245,255,0.06);
-    border: 1px solid rgba(0,245,255,0.12);
-    color: var(--text-primary);
-    border-bottom-left-radius: 4px;
-  }
-  .ai-msg-user .ai-msg-bubble {
-    background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(0,245,255,0.1));
-    border: 1px solid rgba(255,215,0,0.2);
-    color: var(--text-primary);
-    border-bottom-right-radius: 4px;
-  }
-  .ai-typing { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
-  .ai-typing span {
-    width: 7px; height: 7px;
-    background: var(--accent-gold);
-    border-radius: 50%;
-    animation: typing-bounce 1.2s ease-in-out infinite;
-  }
-  .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
-  .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes typing-bounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;} 30%{transform:translateY(-6px);opacity:1;} }
-
-  .ai-input-row {
-    display: flex;
-    gap: 10px;
-    padding: 16px 20px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    background: rgba(5,10,20,0.6);
-  }
-  .ai-input {
-    flex: 1;
-    background: rgba(8,15,28,0.9);
-    border: 1px solid rgba(255,215,0,0.2);
-    border-radius: 12px;
-    color: var(--text-primary);
-    padding: 13px 18px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .ai-input:focus {
-    border-color: rgba(255,215,0,0.5);
-    box-shadow: 0 0 0 3px rgba(255,215,0,0.08);
-  }
-  .ai-input::placeholder { color: var(--text-muted); }
-  .ai-send-btn {
-    background: linear-gradient(135deg, rgba(255,215,0,0.9), rgba(0,245,255,0.8));
-    border: none;
-    border-radius: 12px;
-    color: #08101d;
-    width: 48px; height: 48px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 20px rgba(255,215,0,0.2);
-  }
-  .ai-send-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(255,215,0,0.3); }
-
-  .ai-key-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    background: rgba(255,215,0,0.04);
-    border-bottom: 1px solid rgba(255,215,0,0.08);
-  }
-  .ai-key-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-secondary);
-    white-space: nowrap;
-    letter-spacing: 0.08em;
-  }
-  .ai-key-input {
-    flex: 1;
-    background: rgba(8,15,28,0.9);
-    border: 1px solid rgba(255,215,0,0.15);
-    border-radius: 8px;
-    color: var(--text-primary);
-    padding: 8px 14px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .ai-key-input:focus { border-color: rgba(255,215,0,0.4); }
-  .ai-key-status {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    padding: 5px 10px;
-    border-radius: 8px;
-    white-space: nowrap;
-  }
-  .key-ok { color: var(--accent-green); background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); }
-  .key-missing { color: var(--accent-gold); background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.15); }
+  @media(max-width:900px){ .form-grid{grid-template-columns:1fr 1fr} .form-grid>.form-field:nth-child(1),.form-grid>.form-field:nth-child(2),.form-grid>.form-field:nth-child(5),.form-grid>button{grid-column:span 2} .btn-add{justify-self:stretch;width:100%} }
+  @media(max-width:640px){ .header{flex-direction:column;align-items:flex-start} .week-header{flex-direction:column;gap:10px} .total-banner{flex-direction:column;gap:14px} }
 </style>
 </head>
 <body>
+
+<!-- API KEY MODAL -->
+<div class="key-modal-overlay" id="key-modal" style="display:none">
+  <div class="key-modal">
+    <h2>🔑 NUTX AI ANALYST</h2>
+    <p>ใส่ Anthropic API Key เพื่อเปิดใช้งาน AI วิเคราะห์ข่าวทองครับ<br>Key จะถูกเก็บในเครื่องของคุณเท่านั้น ไม่ได้ส่งไปที่ใด</p>
+    <input type="password" id="modal-key-input" placeholder="sk-ant-api03-..." />
+    <button class="key-modal-btn" onclick="saveKey()">บันทึกและใช้งาน</button>
+    <p class="key-modal-note">
+      ยังไม่มี Key? สมัครฟรีได้ที่<br>
+      <a class="key-link" href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+    </p>
+  </div>
+</div>
 
 <canvas id="animated-bg"></canvas>
 
 <div class="wrapper">
   <header class="header">
-    <div class="logo-block">
+    <div>
       <div class="logo-title">NUTX FX 1.0</div>
       <div class="header-note">TRADING JOURNAL • NUTX EDIT VERSION</div>
     </div>
     <div class="header-stats">
-      <div class="stat-pill"><span class="stat-label">Total P&L</span><span class="stat-value" id="hdr-total">$0.00</span></div>
-      <div class="stat-pill"><span class="stat-label">Win Rate</span><span class="stat-value" id="hdr-wr">0%</span></div>
+      <div class="stat-pill"><span class="stat-label">Total P&L</span><span class="stat-value" id="hdr-total" style="color:var(--accent-green)">+$0.00</span></div>
+      <div class="stat-pill"><span class="stat-label">Win Rate</span><span class="stat-value" id="hdr-wr" style="color:var(--accent-gold)">0%</span></div>
     </div>
   </header>
 
   <div class="form-section">
-    <div class="section-title">
-      <h2>Quick Entry</h2>
-      <span>EDIT</span>
-    </div>
+    <div class="section-title"><h2>⚡ Quick Entry</h2></div>
     <div class="form-grid">
       <div class="form-field"><label>DATE</label><input type="date" id="inp-date"></div>
       <div class="form-field">
         <label>PAIR</label>
         <select id="inp-pair">
-          <option value="XAUUSD">XAUUSD</option>
-          <option value="BTCUSD">BTCUSD</option>
-          <option value="USDJPY">USDJPY</option>
-          <option value="USOIL">USOIL</option>
-          <option value="USTECx100">USTECx100</option>
+          <option>XAUUSD</option><option>BTCUSD</option><option>USDJPY</option><option>USOIL</option><option>USTECx100</option>
         </select>
       </div>
       <div class="form-field"><label>LOT SIZE</label><input type="number" id="inp-lot" step="0.01" placeholder="0.10"></div>
       <div class="form-field"><label>POINTS (+/-)</label><input type="number" id="inp-pts" placeholder="500"></div>
-      <div class="form-field"><label>PREVIEW</label><input type="text" id="inp-preview" readonly style="color:var(--accent-gold)"></div>
+      <div class="form-field"><label>PREVIEW</label><input type="text" id="inp-preview" readonly></div>
       <button class="btn-add" onclick="addTrade()">ADD TRADE</button>
     </div>
   </div>
@@ -481,29 +174,28 @@
 
   <div class="total-banner">
     <div>
-      <div style="font-size:0.7rem; color:var(--text-secondary);">TOTAL PORTFOLIO P&L</div>
-      <div class="total-value" id="total-pnl">$0.00</div>
+      <div style="font-size:0.7rem;color:var(--text-secondary)">TOTAL PORTFOLIO P&L</div>
+      <div class="total-value" id="total-pnl" style="color:var(--accent-green)">+$0.00</div>
     </div>
     <button class="reset-btn" onclick="clearAllData()">RESET ALL</button>
   </div>
 
-  <!-- AI GOLD ANALYST CHAT -->
+  <!-- AI CHAT -->
   <div class="ai-chat-section">
     <div class="ai-chat-header">
-      <div style="display:flex;align-items:center;gap:12px;">
+      <div style="display:flex;align-items:center;gap:12px">
         <div class="ai-avatar">🤖</div>
         <div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--accent-gold);letter-spacing:0.15em;">NUTX AI ANALYST</div>
-          <div style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--text-secondary);letter-spacing:0.1em;">GOLD MARKET · NEWS CALCULATOR</div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--accent-gold);letter-spacing:0.15em">NUTX AI ANALYST</div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--text-secondary);letter-spacing:0.1em">GOLD MARKET · NEWS CALCULATOR</div>
         </div>
       </div>
       <div class="ai-status-dot"></div>
     </div>
 
-    <div class="ai-key-row">
-      <span class="ai-key-label">🔑 API KEY:</span>
-      <input class="ai-key-input" id="ai-api-key" type="password" placeholder="sk-ant-api03-..." oninput="updateKeyStatus()"/>
-      <span class="ai-key-status key-missing" id="key-status">ยังไม่ได้ใส่</span>
+    <div class="ai-key-bar">
+      <span id="key-status-bar">🔑 API Key: กำลังตรวจสอบ...</span>
+      <button onclick="changeKey()">เปลี่ยน Key</button>
     </div>
 
     <div class="ai-quick-btns">
@@ -515,10 +207,8 @@
 
     <div class="ai-messages" id="ai-messages">
       <div class="ai-msg ai-msg-bot">
-        <div class="ai-msg-bubble">
-          สวัสดีครับ! ผม NUTX AI Analyst 🤖<br>
-          ถามผมได้เลยเรื่อง <span style="color:var(--accent-gold)">ข่าวตลาดทอง</span>, คำนวณผลกระทบ, แนวรับแนวต้าน หรือกลยุทธ์เทรด XAUUSD ครับ
-        </div>
+        <div class="ai-msg-bubble">สวัสดีครับ! ผม NUTX AI Analyst 🤖
+ถามผมได้เลยเรื่อง ข่าวตลาดทอง, คำนวณผลกระทบ, แนวรับแนวต้าน หรือกลยุทธ์เทรด XAUUSD ครับ</div>
       </div>
     </div>
 
@@ -529,299 +219,170 @@
       </button>
     </div>
   </div>
-
 </div>
 
+<!-- WAVE BG -->
 <script>
-  let trades = JSON.parse(localStorage.getItem('nutx_trades') || '[]');
-  let tradeCounter = parseInt(localStorage.getItem('nutx_counter') || '0');
+  const canvas = document.getElementById('animated-bg');
+  const ctx = canvas.getContext('2d');
+  let time = 0;
+  function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+  function drawWave(offset,amp,freq,color,opacity){ ctx.beginPath(); ctx.strokeStyle=color; ctx.globalAlpha=opacity; ctx.lineWidth=1; for(let x=0;x<canvas.width;x++){const y=canvas.height/2+Math.sin((x+time+offset)*freq)*amp; x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);} ctx.stroke(); ctx.globalAlpha=1; }
+  function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); drawWave(0,50,0.01,'rgba(0,245,255,0.1)',0.1); drawWave(100,30,0.015,'rgba(255,215,0,0.05)',0.05); drawWave(200,40,0.008,'rgba(0,255,136,0.08)',0.08); time+=0.5; requestAnimationFrame(animate); }
+  window.addEventListener('resize',resizeCanvas); resizeCanvas(); animate();
+</script>
 
-  // ฟังก์ชันส่วนกลางสำหรับจัดรูปแบบตัวเลข $ ให้ถูกต้อง
-  function formatUSD(val) {
-    const sign = val >= 0 ? '+' : '-';
-    return `${sign}$${Math.abs(val).toFixed(2)}`;
-  }
+<!-- TRADING JOURNAL -->
+<script>
+  let trades = JSON.parse(localStorage.getItem('nutx_trades')||'[]');
+  let tradeCounter = parseInt(localStorage.getItem('nutx_counter')||'0');
 
-  function init() {
-    const now = new Date();
-    const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-    document.getElementById('inp-date').value = today;
-    
-    document.getElementById('inp-lot').addEventListener('input', updatePreview);
-    document.getElementById('inp-pts').addEventListener('input', updatePreview);
+  function formatUSD(val){ const s=val>=0?'+':'-'; return `${s}$${Math.abs(val).toFixed(2)}`; }
+  function getMonday(dateStr){ const [y,m,d]=dateStr.split('-').map(Number); const date=new Date(y,m-1,d); const day=date.getDay(); const diff=date.getDate()-day+(day===0?-6:1); const mon=new Date(date.setDate(diff)); return mon.getFullYear()+'-'+String(mon.getMonth()+1).padStart(2,'0')+'-'+String(mon.getDate()).padStart(2,'0'); }
+  function displayDate(s){ const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
+
+  function init(){
+    const now=new Date();
+    document.getElementById('inp-date').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    document.getElementById('inp-lot').addEventListener('input',updatePreview);
+    document.getElementById('inp-pts').addEventListener('input',updatePreview);
     render();
+    checkKey();
   }
 
-  function updatePreview() {
-    const lot = parseFloat(document.getElementById('inp-lot').value) || 0;
-    const pts = parseFloat(document.getElementById('inp-pts').value) || 0;
-    const usd = lot * pts;
-    const el = document.getElementById('inp-preview');
-    el.value = formatUSD(usd); // ใช้ตัวฟอร์แมตที่แก้แล้ว
-    el.style.color = usd >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
-  }
+  function updatePreview(){ const lot=parseFloat(document.getElementById('inp-lot').value)||0; const pts=parseFloat(document.getElementById('inp-pts').value)||0; const usd=lot*pts; const el=document.getElementById('inp-preview'); el.value=formatUSD(usd); el.style.color=usd>=0?'var(--accent-green)':'var(--accent-red)'; }
 
-  function getMonday(dateStr) {
-    const [y, m, d] = dateStr.split('-').map(Number);
-    const date = new Date(y, m - 1, d);
-    const day = date.getDay(); 
-    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-    const monday = new Date(date.setDate(diff));
-    return monday.getFullYear() + '-' + String(monday.getMonth() + 1).padStart(2, '0') + '-' + String(monday.getDate()).padStart(2, '0');
-  }
+  function addTrade(){ const date=document.getElementById('inp-date').value; const pair=document.getElementById('inp-pair').value; const lot=parseFloat(document.getElementById('inp-lot').value); const pts=parseFloat(document.getElementById('inp-pts').value); if(!date||isNaN(lot)||isNaN(pts)){alert('กรุณากรอกข้อมูลให้ครบถ้วน');return;} tradeCounter++; trades.push({id:tradeCounter,date,pair,lot,pts,usd:lot*pts,weekId:getMonday(date)}); localStorage.setItem('nutx_trades',JSON.stringify(trades)); localStorage.setItem('nutx_counter',tradeCounter); document.getElementById('inp-lot').value=''; document.getElementById('inp-pts').value=''; render(); }
 
-  function displayDate(dateStr) {
-    const [y, m, d] = dateStr.split('-');
-    return `${d}/${m}/${y}`;
-  }
+  function deleteTrade(id){ trades=trades.filter(t=>t.id!==id); localStorage.setItem('nutx_trades',JSON.stringify(trades)); render(); }
 
-  function addTrade() {
-    const date = document.getElementById('inp-date').value;
-    const pair = document.getElementById('inp-pair').value;
-    const lot = parseFloat(document.getElementById('inp-lot').value);
-    const pts = parseFloat(document.getElementById('inp-pts').value);
+  function clearAllData(){ if(confirm('ต้องการลบข้อมูลทั้งหมดใช่หรือไม่?')){ trades=[]; tradeCounter=0; localStorage.removeItem('nutx_trades'); localStorage.removeItem('nutx_counter'); render(); } }
 
-    if (!date || isNaN(lot) || isNaN(pts)) { alert('กรุณากรอกข้อมูลให้ครบถ้วน'); return; }
-
-    tradeCounter++;
-    const trade = { 
-      id: tradeCounter, 
-      date: date, 
-      pair, 
-      lot, 
-      pts, 
-      usd: lot * pts, 
-      weekId: getMonday(date) 
-    };
-    
-    trades.push(trade);
-    localStorage.setItem('nutx_trades', JSON.stringify(trades));
-    localStorage.setItem('nutx_counter', tradeCounter);
-    
-    document.getElementById('inp-lot').value = '';
-    document.getElementById('inp-pts').value = '';
-    render();
-  }
-
-  function deleteTrade(id) {
-    trades = trades.filter(t => t.id !== id);
-    localStorage.setItem('nutx_trades', JSON.stringify(trades));
-    render();
-  }
-
-  function clearAllData() {
-    if(confirm('ต้องการลบข้อมูลทั้งหมดใช่หรือไม่?')) {
-      trades = [];
-      localStorage.clear();
-      tradeCounter = 0;
-      render();
-    }
-  }
-
-  function render() {
-    const container = document.getElementById('weeks-container');
-    container.innerHTML = '';
-
-    const groups = {};
-    trades.forEach(t => {
-      if (!groups[t.weekId]) groups[t.weekId] = [];
-      groups[t.weekId].push(t);
+  function render(){
+    const container=document.getElementById('weeks-container'); container.innerHTML='';
+    const groups={}; trades.forEach(t=>{if(!groups[t.weekId])groups[t.weekId]=[]; groups[t.weekId].push(t);});
+    Object.keys(groups).sort((a,b)=>b.localeCompare(a)).forEach(weekId=>{
+      const wt=groups[weekId].sort((a,b)=>b.date.localeCompare(a.date));
+      const total=wt.reduce((s,t)=>s+t.usd,0);
+      const sec=document.createElement('div'); sec.className='week-block';
+      sec.innerHTML=`<div class="week-header"><span class="week-badge">WEEK OF: ${displayDate(weekId)}</span><span style="font-family:'Orbitron';font-weight:900;color:${total>=0?'var(--accent-green)':'var(--accent-red)'}">${formatUSD(total)}</span></div><table><thead><tr><th>DATE</th><th>PAIR</th><th>LOT</th><th>POINTS</th><th>P&L</th><th></th></tr></thead><tbody>${wt.map(t=>`<tr><td>${displayDate(t.date)}</td><td>${t.pair}</td><td>${t.lot.toFixed(2)}</td><td style="color:${t.pts>=0?'var(--accent-cyan)':'var(--accent-red)'}">${t.pts>0?'+':''}${t.pts}</td><td style="color:${t.usd>=0?'var(--accent-green)':'var(--accent-red)'}">${formatUSD(t.usd)}</td><td><button class="delete-button" onclick="deleteTrade(${t.id})">✕</button></td></tr>`).join('')}</tbody></table>`;
+      container.appendChild(sec);
     });
-
-    const sortedWeeks = Object.keys(groups).sort((a, b) => b.localeCompare(a));
-
-    sortedWeeks.forEach(weekId => {
-      const weekTrades = groups[weekId].sort((a, b) => b.date.localeCompare(a.date));
-      const weekTotal = weekTrades.reduce((s, t) => s + t.usd, 0);
-      
-      const section = document.createElement('div');
-      section.className = 'week-block';
-      section.innerHTML = `
-        <div class="week-header">
-          <span class="week-badge">WEEK OF: ${displayDate(weekId)}</span> 
-          <span style="font-family:'Orbitron'; font-weight:900; color:${weekTotal >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}">
-            ${formatUSD(weekTotal)}
-          </span>
-        </div>
-        <table>
-          <thead>
-            <tr><th>DATE</th><th>PAIR</th><th>LOT</th><th>POINTS</th><th>P&L</th><th></th></tr>
-          </thead>
-          <tbody>
-            ${weekTrades.map(t => `
-              <tr>
-                <td>${displayDate(t.date)}</td>
-                <td>${t.pair}</td>
-                <td>${t.lot.toFixed(2)}</td>
-                <td style="color:${t.pts >= 0 ? 'var(--accent-cyan)' : 'var(--accent-red)'}">${t.pts > 0 ? '+' : ''}${t.pts}</td>
-                <td style="color:${t.usd >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}">${formatUSD(t.usd)}</td>
-                <td><button class="delete-button" onclick="deleteTrade(${t.id})">✕</button></td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-      container.appendChild(section);
-    });
-
-    updateSummary();
-  }
-
-  function updateSummary() {
-    const total = trades.reduce((s, t) => s + t.usd, 0);
-    const wins = trades.filter(t => t.usd > 0).length;
-    const wr = trades.length > 0 ? Math.round((wins / trades.length) * 100) : 0;
-
-    const displayTotal = formatUSD(total); // ใช้ตัวฟอร์แมตที่แก้แล้ว[cite: 1]
-    const color = total >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
-    
-    document.getElementById('total-pnl').textContent = displayTotal;
-    document.getElementById('total-pnl').style.color = color;
-    document.getElementById('hdr-total').textContent = displayTotal;
-    document.getElementById('hdr-total').style.color = color;
-    document.getElementById('hdr-wr').textContent = wr + '%';
-    document.getElementById('hdr-wr').style.color = wr >= 50 ? 'var(--accent-green)' : 'var(--accent-gold)';
+    const total=trades.reduce((s,t)=>s+t.usd,0); const wins=trades.filter(t=>t.usd>0).length; const wr=trades.length>0?Math.round(wins/trades.length*100):0;
+    const color=total>=0?'var(--accent-green)':'var(--accent-red)';
+    document.getElementById('total-pnl').textContent=formatUSD(total); document.getElementById('total-pnl').style.color=color;
+    document.getElementById('hdr-total').textContent=formatUSD(total); document.getElementById('hdr-total').style.color=color;
+    document.getElementById('hdr-wr').textContent=wr+'%'; document.getElementById('hdr-wr').style.color=wr>=50?'var(--accent-green)':'var(--accent-gold)';
   }
 
   init();
 </script>
 
+<!-- AI CHAT -->
 <script>
-  const canvas = document.getElementById('animated-bg');
-  const ctx = canvas.getContext('2d');
-  let time = 0;
+  let conversationHistory = [];
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  function drawWave(offset, amplitude, frequency, color, opacity) {
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.globalAlpha = opacity;
-    ctx.lineWidth = 1;
-    for (let x = 0; x < canvas.width; x++) {
-      const y = canvas.height / 2 + Math.sin((x + time + offset) * frequency) * amplitude;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
+  function checkKey(){
+    const key = localStorage.getItem('nutx_api_key')||'';
+    const bar = document.getElementById('key-status-bar');
+    if(key && key.startsWith('sk-ant-')){
+      bar.textContent = '🔑 API Key: ✓ พร้อมใช้งาน';
+      bar.style.color = 'var(--accent-green)';
+    } else {
+      bar.textContent = '🔑 API Key: ยังไม่ได้ตั้งค่า — กรุณาใส่ Key';
+      bar.style.color = 'var(--accent-gold)';
+      document.getElementById('key-modal').style.display = 'flex';
     }
-    ctx.stroke();
-    ctx.globalAlpha = 1;
   }
 
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawWave(0, 50, 0.01, 'rgba(0, 245, 255, 0.1)', 0.1);
-    drawWave(100, 30, 0.015, 'rgba(255, 215, 0, 0.05)', 0.05);
-    drawWave(200, 40, 0.008, 'rgba(0, 255, 136, 0.08)', 0.08);
-    time += 0.5;
-    requestAnimationFrame(animate);
+  function saveKey(){
+    const key = document.getElementById('modal-key-input').value.trim();
+    if(!key){ alert('กรุณาใส่ API Key ครับ'); return; }
+    if(!key.startsWith('sk-ant-')){ alert('รูปแบบ Key ไม่ถูกต้อง ต้องขึ้นต้นด้วย sk-ant-'); return; }
+    localStorage.setItem('nutx_api_key', key);
+    document.getElementById('key-modal').style.display = 'none';
+    checkKey();
+    appendMsg('✅ บันทึก API Key แล้วครับ พร้อมใช้งาน!', 'bot');
   }
 
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-  animate();
-</script>
+  function changeKey(){
+    document.getElementById('modal-key-input').value = '';
+    document.getElementById('key-modal').style.display = 'flex';
+  }
 
-<script>
-  async function sendAiMsg() {
+  async function sendAiMsg(){
     const input = document.getElementById('ai-input');
     const text = input.value.trim();
-    if (!text) return;
+    if(!text) return;
 
-    const apiKey = document.getElementById('ai-api-key').value.trim();
-    if (!apiKey) { Nut888
-      appendMsg("⚠️ กรุณาใส่ Anthropic API Key ก่อนครับ (ช่อง 🔑 ด้านบน)", 'bot');
+    const apiKey = localStorage.getItem('nutx_api_key')||'';
+    if(!apiKey){
+      document.getElementById('key-modal').style.display='flex';
       return;
     }
 
     input.value = '';
     appendMsg(text, 'user');
     const typingId = appendTyping();
+
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true"
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version':'2023-06-01',
+          'anthropic-dangerous-direct-browser-access':'true'
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: `คุณคือ NUTX AI Analyst ผู้เชี่ยวชาญตลาดทองคำ (XAUUSD) และ Forex
+          model:'claude-sonnet-4-20250514',
+          max_tokens:1000,
+          system:`คุณคือ NUTX AI Analyst ผู้เชี่ยวชาญตลาดทองคำ (XAUUSD) และ Forex
 ตอบเป็นภาษาไทย กระชับ ชัดเจน เป็นมืออาชีพ
 ความเชี่ยวชาญ: วิเคราะห์ข่าวเศรษฐกิจ (NFP, CPI, Fed, GDP), คำนวณผลกระทบต่อราคาทอง, แนวรับแนวต้าน, กลยุทธ์เทรด XAUUSD
 เมื่อคำนวณ ให้แสดงตัวเลขชัดเจน เช่น จุดที่ทองอาจวิ่งถึง, จำนวน pips, % การเปลี่ยนแปลง
 ใช้ emoji เล็กน้อยเพื่อความน่าอ่าน`,
-          messages: conversationHistory.concat([{ role: "user", content: text }])
+          messages: conversationHistory.concat([{role:'user',content:text}])
         })
       });
-      const data = await response.json();
+      const data = await res.json();
       removeTyping(typingId);
-      if (data.error) {
-        appendMsg(`⚠️ API Error: ${data.error.message}`, 'bot');
-        return;
+      if(data.error){
+        if(data.error.type==='authentication_error'){
+          appendMsg('⚠️ API Key ไม่ถูกต้องครับ กรุณาเปลี่ยน Key ใหม่', 'bot');
+          localStorage.removeItem('nutx_api_key'); checkKey(); return;
+        }
+        appendMsg(`⚠️ Error: ${data.error.message}`, 'bot'); return;
       }
-      const reply = data.content?.[0]?.text || "ขออภัยไม่สามารถตอบอีหนูได้ครับ";
-      conversationHistory.push({ role: "user", content: text });
-      conversationHistory.push({ role: "assistant", content: reply });
-      if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
+      const reply = data.content?.[0]?.text || 'ขออภัยครับ ไม่สามารถตอบได้';
+      conversationHistory.push({role:'user',content:text});
+      conversationHistory.push({role:'assistant',content:reply});
+      if(conversationHistory.length>20) conversationHistory=conversationHistory.slice(-20);
       appendMsg(reply, 'bot');
     } catch(e) {
       removeTyping(typingId);
-      appendMsg("⚠️ เชื่อมต่อ AI ไม่ได้ครับ กรุณาตรวจสอบ API Key และลองใหม่", 'bot');
+      appendMsg('⚠️ เชื่อมต่อไม่ได้ครับ กรุณาลองใหม่', 'bot');
     }
   }
 
-  function updateKeyStatus() {
-    const key = document.getElementById('ai-api-key').value.trim();
-    const statusEl = document.getElementById('key-status');
-    if (key.startsWith('sk-ant-')) {
-      statusEl.textContent = '✓ พร้อมใช้งาน';
-      statusEl.className = 'ai-key-status key-ok';
-    } else if (key.length > 0) {
-      statusEl.textContent = '⚠ รูปแบบไม่ถูก';
-      statusEl.className = 'ai-key-status key-missing';
-    } else {
-      statusEl.textContent = 'ยังไม่ได้ใส่';
-      statusEl.className = 'ai-key-status key-missing';
-    }
+  function askQuick(q){ document.getElementById('ai-input').value=q; sendAiMsg(); }
+
+  function appendMsg(text, type){
+    const box=document.getElementById('ai-messages');
+    const div=document.createElement('div'); div.className=`ai-msg ai-msg-${type}`;
+    div.innerHTML=`<div class="ai-msg-bubble">${text.replace(/\n/g,'<br>')}</div>`;
+    box.appendChild(div); box.scrollTop=box.scrollHeight;
   }
 
-  let conversationHistory = [];
-
-  function askQuick(q) {
-    document.getElementById('ai-input').value = q;
-    sendAiMsg();
+  function appendTyping(){
+    const box=document.getElementById('ai-messages');
+    const id='typing-'+Date.now();
+    const div=document.createElement('div'); div.className='ai-msg ai-msg-bot'; div.id=id;
+    div.innerHTML=`<div class="ai-msg-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>`;
+    box.appendChild(div); box.scrollTop=box.scrollHeight; return id;
   }
 
-  function appendMsg(text, type) {
-    const box = document.getElementById('ai-messages');
-    const div = document.createElement('div');
-    div.className = `ai-msg ai-msg-${type}`;
-    div.innerHTML = `<div class="ai-msg-bubble">${text.replace(/\n/g,'<br>')}</div>`;
-    box.appendChild(div);
-    box.scrollTop = box.scrollHeight;
-  }
-
-  function appendTyping() {
-    const box = document.getElementById('ai-messages');
-    const id = 'typing-' + Date.now();
-    const div = document.createElement('div');
-    div.className = 'ai-msg ai-msg-bot';
-    div.id = id;
-    div.innerHTML = `<div class="ai-msg-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>`;
-    box.appendChild(div);
-    box.scrollTop = box.scrollHeight;
-    return id;
-  }
-
-  function removeTyping(id) {
-    const el = document.getElementById(id);
-    if (el) el.remove();
-  }
+  function removeTyping(id){ const el=document.getElementById(id); if(el)el.remove(); }
 </script>
+</body>
 </html>
