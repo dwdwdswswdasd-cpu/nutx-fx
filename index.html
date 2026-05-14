@@ -731,7 +731,7 @@
     if (!text) return;
 
     const apiKey = document.getElementById('ai-api-key').value.trim();
-    if (!apiKey) {
+    if (!apiKey) { Nut888
       appendMsg("⚠️ กรุณาใส่ Anthropic API Key ก่อนครับ (ช่อง 🔑 ด้านบน)", 'bot');
       return;
     }
@@ -765,7 +765,7 @@
         appendMsg(`⚠️ API Error: ${data.error.message}`, 'bot');
         return;
       }
-      const reply = data.content?.[0]?.text || "ขออภัยครับ ไม่สามารถตอบได้ในขณะนี้";
+      const reply = data.content?.[0]?.text || "ขออภัยไม่สามารถตอบอีหนูได้ครับ";
       conversationHistory.push({ role: "user", content: text });
       conversationHistory.push({ role: "assistant", content: reply });
       if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
